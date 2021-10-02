@@ -19,7 +19,8 @@
 
 ### Postgres
 
+- host: `laravel_postgres`
 - user: `laravel`
 - password: `laravel`
 - database: `postgres`
-- port: `15432`
+- port: `5432`

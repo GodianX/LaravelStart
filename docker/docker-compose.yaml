@@ -28,7 +28,7 @@ services:
 
   postgres:
     image: postgres:11
-    container_name: sn_postgres
+    container_name: laravel_postgres
     ports:
       - "15432:5432"
     environment:
