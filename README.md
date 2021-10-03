@@ -6,11 +6,21 @@
 
 ### Installation
 
-- `cd docker`
+- `cp .env.example .env`
 - `docker-compose up -d --build`
 - `docker exec -it laravel_php bash`
 - `cd ../laravelStart/`
 - `composer install`
+
+### Start
+- `docker-compose up -d`
+
+### Stop
+- `docker-compose down`
+
+### Laravel commands use here
+- `docker exec -it laravel_php bash`
+- `cd ../laravelStart/`
 
 ### Web
 
@@ -19,8 +29,8 @@
 
 ### Postgres
 
-- host: `laravel_postgres`
+- host: `localhost`
 - user: `laravel`
 - password: `laravel`
 - database: `postgres`
-- port: `5432`
+- port: `15432`
