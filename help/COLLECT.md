@@ -20,3 +20,11 @@
 `sortBy/sortByDesc` -> могут принимать колбэк
 
 `collect([['name' => 'A'], ['name' => 'B'], ['name' => 'C']])->sortByDesc('name')->all()`
+
+## 6. Plug - выдать значения всех ключей коллекцией
+
+`collect([])->plug('key/attribute')`
+
+## 7. First
+
+`collect([])->first()`
