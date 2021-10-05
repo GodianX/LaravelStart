@@ -133,3 +133,12 @@ public function getPosts(): Collection
 }
 ````
 
+## 8. Casts - преобразование из типов php в типы БД. 
+
+- Значения - типы пхп
+
+````
+protected $casts = [
+        'meta_data' => 'array'
+    ];
+````

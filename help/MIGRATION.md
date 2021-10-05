@@ -35,3 +35,7 @@
 ## 6. Relations by constraints
 
 `$table->foreignId('post_id')->constrained('posts');`
+
+## 6. Create update migration
+
+`php artisan make:migration add_meta_data_to_posts_table`
