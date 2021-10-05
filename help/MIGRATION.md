@@ -32,4 +32,6 @@
 
 ` php artisan make:migra create_post_table`
 
+## 6. Relations by constraints
 
+`$table->foreignId('post_id')->constrained('posts');`

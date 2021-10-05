@@ -41,3 +41,95 @@
 ## 8. Change default attribute (id) for searching in a routing (ROUTING.md #4)
 
 `public function getRouteKeyName()`
+
+
+## 7. Model Relations**
+
+### 7.1 ManyToOne
+
+`$this->belongsTo(PostCategory::class);`
+
+### 7.2 ManyToOne
+
+`$this->belongsMany(PostCategory::class);`
+
+### 7.3 OneToMany
+
+`$this->hasMany(Comment::class);`
+
+### 7.4 OneToOne
+
+`$this->hasOne(Comment::class);`
+
+### 7.4 OneToOne Through
+
+`$this->hasOneThrough(Comment::class, PostComments::class);`
+
+### 7.5 Example
+
+Table Post
+
+- `id`
+- `title`
+
+Table PostCat
+
+- `id`
+- `post_id`
+- `cat_id`
+
+Table Cat
+
+- `id`
+- `name`
+
+
+## Post:
+
+### Relations:
+
+- getPostCat: `$this->hasOne(PostCategory::class)->first()`
+
+### Getters:
+
+````
+public function getCategory(): ?Category
+{
+    $postCat = $this->getPostCategory();
+
+    if (!$postCat) {
+        return null;
+    }
+
+    return $postCat->getCategory();
+}
+````
+
+
+## PostCategory:
+
+### Relations:
+
+-  getPost: `$this->hasOne(Post::class, 'id', 'category_id')->first();`
+-  getCategory: `$this->hasOne(Category::class, 'id', 'category_id')->first();`
+
+### Getters:
+
+- Same as relations
+
+
+## Category:
+
+### Relations:
+
+- getPostCategory: `$this->hasMany(PostCategory::class)->get();`
+
+### Getters:
+
+````
+public function getPosts(): Collection
+{
+    return $this->getPostCategories()->map(static fn (PostCategory $postCategory) => $postCategory->getPost());
+}
+````
+
