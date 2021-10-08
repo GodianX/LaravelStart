@@ -65,7 +65,7 @@
 
 `$this->hasOneThrough(Comment::class, PostComments::class);`
 
-### 7.5 Example
+### 7.5 Example (Better don't use in laravel...  every function call create query)
 
 Table Post
 
@@ -142,3 +142,114 @@ protected $casts = [
         'meta_data' => 'array'
     ];
 ````
+
+## 9. The best way for relations
+
+Table Post
+
+- `id`
+- `title`
+
+Table PostCat
+
+- `id`
+- `post_id`
+- `cat_id`
+
+Table Category
+
+- `id`
+- `name`
+
+### Table Post
+
+###Relation:
+
+````
+public function category(): HasOneThrough
+{
+    return $this->hasOneThrough(
+    Category::class, // what model you need
+    PostCategory::class, // through model you can get 
+    'post_id', // foreing_key in PostCategory
+    'id', // foreign_key in Category
+    'id', // local_key in Post
+    'category_id'); // local_key in PostCategory for Category
+}
+````
+
+###Getter:
+````
+$posts = Post::with('category')->get();
+
+/** @var Post $post */
+foreach ($posts as $post) {
+    $post->category->title;
+}
+````
+
+### Table PostCategory
+
+### Relation:
+
+````
+public function post(): HasOne
+{
+   return $this->hasOne(Post::class, 'id', 'category_id');
+}
+````
+
+````
+public function category(): HasOne
+{
+    return $this->hasOne(Category::class, 'id', 'category_id');
+}
+````
+
+### Getters:
+
+````
+$postCats = PostCategory::with('post')->get();
+
+/** @var PostCategory $postCat */
+foreach ($postCats as $postCat) {
+    $postCat->post->title;
+}
+````
+
+
+````
+$postCats = PostCategory::with('category')->get();
+
+/** @var PostCategory $postCat */
+foreach ($postCats as $postCat) {
+    $postCat->category->title;
+}
+````
+
+### Table Category
+
+### Relations:
+
+````
+public function posts(): HasManyThrough
+{
+    return $this->hasManyThrough(Post::class, PostCategory::class, 'category_id', 'id', 'id', 'post_id');
+}
+````
+
+### Getters: 
+
+````
+$cats = Category::with('posts')->get();
+foreach ($cats as $cat) {
+    /** @var Post $post */
+    foreach ($cat->posts as $post) {
+        $post->title;
+    }
+}
+````
+
+## 10. Multi relation getters
+
+` $postCats = PostCategory::with(['category', 'post'])->get()`
